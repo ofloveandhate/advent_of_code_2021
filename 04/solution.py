@@ -34,7 +34,6 @@ def is_winner(b):
 def score(b,n):
 	s = np.sum(np.reshape(b,(1,25)))
 
-	print(s,n)
 	return s*n
 
 ###
@@ -53,20 +52,33 @@ def part1():
 
 		for b in boards:
 			if (is_winner(b)):
-				print(b)
 				return score(b,n)
 
 ###
 
 
-
 def part2():
 	data = read_data()
-	thing = []
-	for a in thing:
-		pass
 
-	return
+	numbers = draw_numbers(data)
+
+	boards = [board(data) for ii in range(len(data)//5)]
+	winners = []
+
+	for ii in range(len(numbers)):
+
+		n = numbers[ii]
+		
+		[mark_number(b,n) for b in boards]
+
+		for b in boards:
+			if is_winner(b):
+				winners.append((b,n))
+
+		boards = [b for b in boards if not is_winner(b)]
+
+		# the answer is > 12648
+	return score(winners[-1][0],winners[-1][1])
 
 print("part 1: {}".format(part1()))
 print("part 2: {}".format(part2()))
