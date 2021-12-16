@@ -1,3 +1,6 @@
+import numpy as np
+import pandas as pd
+
 def read_data():
 	with open ('testinput.txt') as f:
 		data = f.readlines()
