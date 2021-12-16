@@ -75,56 +75,41 @@ def part2():
 	# create matrix to store data into
 	counts = np.zeros((n,n))
 	
-
 	assert(start.shape[0]==end.shape[0])
 
 	for ii in range(start.shape[0]):
 
-		
-
 		x1,y1 = start[ii,:]
 		x2,y2 = end[ii,:]
 
+		# I want the lower left and upper right.  lower left is origin in my mind.
+		blx = min(x1, x2)
+		bly = min(y1, y2)
 
+		urx = max(x1+1, x2+1)
+		ury = max(y1+1, y2+1)
 
+		nx = urx-blx
+		ny = ury-bly
 
-
-		if (x2==x1) or (y2==y1):
-
-			blx = min(x1, x2)
-			bly = min(y1, y2)
-
-			urx = max(x1+1, x2+1)
-			ury = max(y1+1, y2+1)
+		if (nx==1) or (ny==1):
 
 			# straight line
-			accumulate_me = np.ones((urx-blx, ury-bly))
+			accumulate_me = np.ones((nx, ny))
 		else:
 			# diagonal line
-
-			# I want the lower left and upper right.  lower left is origin in my mind.
-
-			blx = min(x1, x2)
-			bly = min(y1, y2)
-
-			urx = max(x1+1, x2+1)
-			ury = max(y1+1, y2+1)
-
-
-			assert(abs(x2-x1)==abs(y2-y1))
 			
-			n = abs(x2-x1)+1
+			assert(nx==ny)
+			n = nx
 
 			if (blx==x1 and bly==y1) or (blx==x2 and bly==y2):
 				accumulate_me = np.identity(n)
 			else:
 				accumulate_me = np.flipud(np.identity(n))
 
-		counts[blx:urx:1, bly:ury:1] += accumulate_me
 
-	counts = np.transpose(counts)
+		counts[blx:urx, bly:ury] += accumulate_me
 
-	
 	return np.sum(counts>1)
 
 print("part 1: {}".format(part1()))
